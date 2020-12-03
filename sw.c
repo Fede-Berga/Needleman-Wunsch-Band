@@ -73,6 +73,29 @@ int score(char c1, char c2){
     return scoring_matrix[i_c1][i_c2];
 }
 
+bool string_analizer(char * string){
+    bool correct;
+    size_t j;
+    for (size_t i = 0; i < strlen(string); i++)
+    {
+        correct = false;
+        j = 0;
+        while (i < SCORING_LEN && !correct)
+        {
+            if (scoring_lookup[j] == string[i])
+            {
+                correct = true;
+            }
+            ++j;
+        }
+        if (!correct)
+        {
+            return false;
+        } 
+    }
+    return true;
+}
+
 range_s range(band_s band, uint64_t y) {
     range_s r = {0, 0};
 
@@ -158,8 +181,6 @@ static void band_align(uint64_t base, uint64_t extra, char* s1, char* s2) {
     }
 }
 
-
-
 int main(int argc, char const *argv[])
 {
     char s1[BUZZ_SIZE];
@@ -169,12 +190,13 @@ int main(int argc, char const *argv[])
 
     to_upper_case(s1);
     to_upper_case(s2);
-    
-    for (size_t i = 0; i < strlen(s1); i++)
+
+    if (!string_analizer(s1) || !string_analizer(s2))
     {
-        printf("score : %d\n", score(s1[i], s2[i]));
+        return -1;
     }
     
+    //printf("score : %d\n", score('G', 'N'));
 
     return 0;
 }
