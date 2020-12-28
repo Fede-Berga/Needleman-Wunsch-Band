@@ -1,3 +1,4 @@
+//Bergamini Federico 845646
 #include "sw.h"
 #define BUZZ_SIZE 1024
 //#define DEBUG
